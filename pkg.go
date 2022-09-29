@@ -48,12 +48,16 @@ func Validate(bytesIn []byte, encodedHash string, secretKey string) error {
 		payload = strings.TrimPrefix(encodedHash, "sha256=")
 
 		hashFn = sha256.New
+	} else if strings.HasPrefix(encodedHash, "sha384=") {
+		payload = strings.TrimPrefix(encodedHash, "sha384=")
+
+		hashFn = sha512.New384
 	} else if strings.HasPrefix(encodedHash, "sha512=") {
 		payload = strings.TrimPrefix(encodedHash, "sha512=")
 
 		hashFn = sha512.New
 	} else {
-		return fmt.Errorf("valid hash prefixes: [sha1=, sha256=, sha512=], got: %s", encodedHash)
+		return fmt.Errorf("valid hash prefixes: [sha1=, sha256=, sha384=, sha512=], got: %s", encodedHash)
 	}
 
 	messageMAC := payload

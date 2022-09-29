@@ -19,7 +19,7 @@ func Test_GenerateInvalid_GivesError(t *testing.T) {
 		return
 	}
 
-	wantErr := "valid hash prefixes: [sha1=, sha256=, sha512=], got: ab"
+	wantErr := "valid hash prefixes: [sha1=, sha256=, sha384=, sha512=], got: ab"
 	if err.Error() != wantErr {
 		t.Errorf("want: %s, got: %s", wantErr, err.Error())
 		t.Fail()
