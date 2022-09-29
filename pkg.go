@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha1"
 	"crypto/sha256"
+	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
 	"hash"
@@ -47,8 +48,12 @@ func Validate(bytesIn []byte, encodedHash string, secretKey string) error {
 		payload = strings.TrimPrefix(encodedHash, "sha256=")
 
 		hashFn = sha256.New
+	} else if strings.HasPrefix(encodedHash, "sha512=") {
+		payload = strings.TrimPrefix(encodedHash, "sha512=")
+
+		hashFn = sha512.New
 	} else {
-		return fmt.Errorf("valid hash prefixes: [sha1=, sha256=], got: %s", encodedHash)
+		return fmt.Errorf("valid hash prefixes: [sha1=, sha256=, sha512=], got: %s", encodedHash)
 	}
 
 	messageMAC := payload
